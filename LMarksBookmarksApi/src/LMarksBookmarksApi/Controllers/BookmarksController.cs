@@ -92,6 +92,7 @@ namespace LMarksBookmarksApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
+
             var bookmark = Bookmarks.Find(id);
             if (bookmark == null)
             {
