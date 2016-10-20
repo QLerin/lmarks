@@ -9,6 +9,7 @@ namespace LMarksBookmarksApi.Models
     {
         void Add(Bookmark mark);
         IEnumerable<Bookmark> GetAll();
+        IEnumerable<Bookmark> GetAllUserBookmarks(string login);
         Bookmark Find(string key);
         Bookmark Remove(string key);
         void Update(Bookmark mark);

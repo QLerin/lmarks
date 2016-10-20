@@ -65,6 +65,31 @@ namespace LMarksBookmarksApi.Models
             return m.Values;
         }
 
+        public IEnumerable<Bookmark> GetAllUserBookmarks(string user)
+        {
+            ConcurrentDictionary<string, Bookmark> m = new ConcurrentDictionary<string, Bookmark>();
+            string sqlText = "SELECT * FROM t_bookmarks;";
+            SqlCommand cmd = new SqlCommand(sqlText, connection);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Bookmark temp = new Bookmark();
+                    temp.Key = reader.GetString(0).TrimEnd();
+                    temp.User = reader.GetString(1).TrimEnd();
+                    temp.Link = reader.GetString(2).TrimEnd();
+                    temp.Description = reader.GetString(3).TrimEnd();
+                    //temp.Date = reader.GetDateTime(4);
+                    if (temp.User == user)
+                    {
+                        m[temp.Key] = temp;
+                    }
+
+                }
+            }
+            return m.Values;
+        }
+
         public Bookmark Find(string key)
         {
             GetAll();

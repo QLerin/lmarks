@@ -29,7 +29,8 @@
           "Microsoft.Extensions.Logging.Console": "1.0.0",
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-          "System.Data.SqlClient": "4.1.0"
+          "System.Data.SqlClient": "4.1.0",
+          "Newtonsoft.Json": "9.0.1"
         },
         "compile": {
           "LMarksBookmarksApi.dll": {}
@@ -2689,7 +2690,8 @@
           "Microsoft.Extensions.Logging.Console": "1.0.0",
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-          "System.Data.SqlClient": "4.1.0"
+          "System.Data.SqlClient": "4.1.0",
+          "Newtonsoft.Json": "9.0.1"
         },
         "runtime": {
           "LMarksBookmarksApi.dll": {}
