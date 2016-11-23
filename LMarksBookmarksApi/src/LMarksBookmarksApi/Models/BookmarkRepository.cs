@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,20 +11,17 @@ namespace LMarksBookmarksApi.Models
     public class BookmarkRepository : IBookmarkRepository
     {
         private ConcurrentDictionary<string, Bookmark> _marks = new ConcurrentDictionary<string, Bookmark>();
-        private SqlConnection connection;
+        private SqlConnection _connection;
 
         public bool MakeDatabaseConnection()
         {
-            if (connection != null)
+            if (_connection != null)
                 return true;
 
-            connection = new SqlConnection();
-            connection.ConnectionString = "SERVER=DESKTOP-1T3FQ28\\SQLEXPRESS;" + "DATABASE=" + "bookmarks" + ";" + "UID=" + "linas" + ";" + "PASSWORD=" + "linas" + ";MultipleActiveResultSets=True;";
-            connection.Open();
-            if (connection.State == System.Data.ConnectionState.Open)
-                return true;
-
-            return false;
+            _connection = new SqlConnection();
+            _connection.ConnectionString = "SERVER=DESKTOP-1T3FQ28\\SQLEXPRESS;" + "DATABASE=" + "bookmarks" + ";" + "UID=" + "linas" + ";" + "PASSWORD=" + "linas" + ";MultipleActiveResultSets=True;";
+            _connection.Open();
+            return (_connection.State == System.Data.ConnectionState.Open);
         }
 
         public BookmarkRepository()
@@ -34,98 +32,42 @@ namespace LMarksBookmarksApi.Models
         public void Add(Bookmark mark)
         {
             mark.Key = Guid.NewGuid().ToString();
+            mark.Date = DateTime.Now;
 
-            string sqlText = "INSERT INTO t_bookmarks ([key], [user], [link], [description]) VALUES('" + mark.Key +
-                             "', '" + mark.User + "', '" + mark.Link + "', '" + mark.Description + "');";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            SqlDataReader rdr = cmd.ExecuteReader();
-            
+            _connection.Execute(@"INSERT INTO t_bookmarks ([key], [user], [link], [description], [date]) VALUES (@a, @b, @c, @d, @e);",
+                new { a = mark.Key, b = mark.User, c = mark.Link, d = mark.Description, e = mark.Date});
         }
 
         public IEnumerable<Bookmark> GetAll()
         {
-            ConcurrentDictionary<string, Bookmark> m = new ConcurrentDictionary<string, Bookmark>();
-            string sqlText = "SELECT * FROM t_bookmarks;";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Bookmark temp = new Bookmark();
-                    temp.Key = reader.GetString(0).TrimEnd();
-                    temp.User = reader.GetString(1).TrimEnd();
-                    temp.Link = reader.GetString(2).TrimEnd();
-                    temp.Description = reader.GetString(3).TrimEnd();
-                    //temp.Date = reader.GetDateTime(4);
-                    m[temp.Key] = temp;
-                    
-                }
-            }
-            _marks = m;
-            return m.Values;
+            var m = _connection.Query<Bookmark>("SELECT * FROM t_bookmarks");
+            return m;
         }
 
         public IEnumerable<Bookmark> GetAllUserBookmarks(string user)
         {
-            ConcurrentDictionary<string, Bookmark> m = new ConcurrentDictionary<string, Bookmark>();
-            string sqlText = "SELECT * FROM t_bookmarks;";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Bookmark temp = new Bookmark();
-                    temp.Key = reader.GetString(0).TrimEnd();
-                    temp.User = reader.GetString(1).TrimEnd();
-                    temp.Link = reader.GetString(2).TrimEnd();
-                    temp.Description = reader.GetString(3).TrimEnd();
-                    //temp.Date = reader.GetDateTime(4);
-                    if (temp.User == user)
-                    {
-                        m[temp.Key] = temp;
-                    }
-
-                }
-            }
-            return m.Values;
+            var m = _connection.Query<Bookmark>("SELECT * FROM t_bookmarks WHERE [user]=@a", new {a = user});
+            return m;
         }
 
         public Bookmark Find(string key)
         {
-            GetAll();
-            Bookmark mark;
-            _marks.TryGetValue(key, out mark);
-            return mark;
+            var m = _connection.Query<Bookmark>("SELECT * FROM t_bookmarks WHERE [key] = @key", new {key});
+            return m.FirstOrDefault(); ;
         }
 
         public Bookmark Remove(string key)
         {
-            GetAll();
-
-            Bookmark mark;
-            _marks.TryRemove(key, out mark);
-
-            if (key.Length < 200)
-            {
-                for (int i = 0; i < (200 - key.Length); i++)
-                {
-                    key += " ";
-                }
-            }
-            string sqlText =
-                "DELETE FROM t_bookmarks WHERE [key]='" + key + "';";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            cmd.ExecuteNonQuery();
-
-
-            return mark;
+            var m = Find(key);
+            _connection.Execute(@"DELETE FROM t_bookmarks WHERE [key]=@key", new { key });
+            return m;
         }
 
-        public void Update(Bookmark mark)
+        public void Update(Bookmark m)
         {
-            string sqlText ="UPDATE t_bookmarks SET [user]='" + mark.User + "', [link]='" + mark.Link + "', [description]='" + mark.Description + "' WHERE [key]='" + mark.Key + "';";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            cmd.ExecuteNonQuery();
+            m.Date = DateTime.Now;
+            _connection.Execute(@"UPDATE t_bookmarks SET [user] = @a, [link] = @b, [description] = @c, [date] = @d WHERE [key] = @e;", 
+                new { a = m.User, b = m.Link, c = m.Description, d = m.Date, e = m.Key});
         }
     }
 }

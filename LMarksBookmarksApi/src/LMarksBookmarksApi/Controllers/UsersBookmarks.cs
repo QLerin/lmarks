@@ -18,8 +18,8 @@ namespace LMarksBookmarksApi.Controllers
         {
             IEnumerable<Bookmark> a = new List<Bookmark>();
             string login = "";
-            User Userlist = new User();
-            IList<User> uL = Userlist.GetAll();
+            User userlist = new User();
+            IList<User> uL = userlist.GetAll();
             foreach (var user in uL)
             {
                 if (user.Login == id)
@@ -32,12 +32,8 @@ namespace LMarksBookmarksApi.Controllers
                 NotFound();
                 return a;
             }
-            else
-            {
                 BookmarkRepository rep = new BookmarkRepository();
                 a = rep.GetAllUserBookmarks(login);
-
-            }
 
             return a;
         }
