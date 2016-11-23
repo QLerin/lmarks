@@ -17,14 +17,14 @@ namespace LMarksUsersApi.Controllers
 
         public IUsersRepository Userlist { get; set; }
 
-        // GET: api/values
+        // GET: u
         [HttpGet]
         public IEnumerable<User> GetAll()
         {
             return Userlist.GetAll();
         }
 
-        // GET api/values/5
+        // GET u/name
         [HttpGet("{id}", Name = "GetUser")]
         public IActionResult GetById(string id)
         {
@@ -36,19 +36,8 @@ namespace LMarksUsersApi.Controllers
             return new ObjectResult(user);
         }
 
-        //// GET api/values/5
-        //[HttpGet("users/{login}", Name = "GetUser")]
-        //public IActionResult GetByLogin(string login)
-        //{
-        //    var user = Userlist.FindByLogin(login);
-        //    if (user == null)
-        //    {
-        //        NotFound();
-        //    }
-        //    return new ObjectResult(user);
-        //}
 
-        // POST api/values
+        // POST u
         [HttpPost]
         public IActionResult Create([FromBody]User user)
         {
@@ -60,7 +49,7 @@ namespace LMarksUsersApi.Controllers
             return CreatedAtRoute("GetUser", new { id = user.Key }, user);
         }
 
-        // PUT api/values/5
+        // PUT u/name
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody]User user)
         {
@@ -77,7 +66,7 @@ namespace LMarksUsersApi.Controllers
             Userlist.Update(user);
             return new NoContentResult();
         }
-
+        
         [HttpPatch("{id}")]
         public IActionResult Update([FromBody] User user, string id)
         {
@@ -98,7 +87,7 @@ namespace LMarksUsersApi.Controllers
             return new NoContentResult();
         }
 
-        // DELETE api/values/5
+        // DELETE u/5
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {

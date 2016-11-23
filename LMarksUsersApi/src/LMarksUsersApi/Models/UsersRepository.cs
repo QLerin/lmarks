@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace LMarksUsersApi.Models
 {
@@ -30,92 +31,38 @@ namespace LMarksUsersApi.Models
         public UsersRepository()
         {
             MakeDatabaseConnection();
-            Add(new User { Email = "test@test.com" });
         }
 
         public IEnumerable<User> GetAll()
         {
-            ConcurrentDictionary<string, User> u = new ConcurrentDictionary<string, User>();
-            string sqlText = "SELECT * FROM t_users;";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    User temp = new User();
-                    temp.Key = reader.GetString(0).TrimEnd();
-                    temp.Login = reader.GetString(1).TrimEnd();
-                    temp.Email = reader.GetString(2).TrimEnd();
-                    //temp.PasswordHash = reader.GetString(3).TrimEnd();
-                    //temp.SecurityStamp = reader.GetString(4).TrimEnd();
-                    //temp.Date = reader.GetDateTime(4);
-                    u[temp.Key] = temp;
-
-                }
-            }
-            _users = u;
-            return u.Values;
+            var u = connection.Query<User>("SELECT * FROM t_users");
+            return u;
         }
 
         public void Add(User u)
         {
             u.Key = Guid.NewGuid().ToString();
-
-            string sqlText = "INSERT INTO t_users ([key], [login], [email], [passwordHash], [securityStamp]) VALUES('" + u.Key +
-                             "', '" + u.Login + "', '" + u.Email + "', '" + u.PasswordHash + "', '" + u.SecurityStamp + "');";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            SqlDataReader rdr = cmd.ExecuteReader();
+            connection.Execute(@"INSERT INTO t_users ([key], [login], [email], [passwordHash], [securityStamp]) values (@a, @b, @c, @d, @e)",
+                new {a = u.Key, b = u.Login, c = u.Email, d = u.PasswordHash, e = u.SecurityStamp});
         }
 
         public User Find(string key)
         {
-            GetAll();
-            User u;
-            _users.TryGetValue(key, out u);
-            return u;
+            var u = connection.Query<User>("select [key], [login], [email], [passwordHash], [securityStamp] FROM t_users where [key] = @key", new {key} );
+            return u.FirstOrDefault();
         }
-
-        //public User FindByLogin(string login)
-        //{
-        //    GetAll();
-        //    foreach (var person in _users)
-        //    {
-        //        if (person.Value.Login == login)
-        //        {
-        //            return person.Value;
-        //        }
-        //    }
-        //    return null;
-        //}
 
         public User Remove(string key)
         {
-            GetAll();
-
-            User u;
-            _users.TryRemove(key, out u);
-
-            if (key.Length < 200)
-            {
-                for (int i = 0; i < (200 - key.Length); i++)
-                {
-                    key += " ";
-                }
-            }
-            string sqlText =
-                "DELETE FROM t_users WHERE [key]='" + key + "';";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            cmd.ExecuteNonQuery();
-
+            var u = Find(key);
+            connection.Execute(@"DELETE FROM t_users WHERE [key]=@key", new {key});
 
             return u;
         }
 
         public void Update(User u)
         {
-            string sqlText = "UPDATE t_users SET [login]='" + u.Login + "', [email]='" + u.Email + "', [passwordHash]='" + u.PasswordHash + "', [securityStamp]='" + u.SecurityStamp + "' WHERE [key]='" + u.Key + "';";
-            SqlCommand cmd = new SqlCommand(sqlText, connection);
-            cmd.ExecuteNonQuery();
+            connection.Execute(@"UPDATE t_users SET [login]=@a, [email]=@b, [passwordHash]=@c, [securityStamp]=@d WHERE [key]=@e;", new { a = u.Login, b = u.Email, c = u.PasswordHash, d = u.SecurityStamp,e = u.Key });
         }
     }
 }
