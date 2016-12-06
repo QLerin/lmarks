@@ -37,7 +37,10 @@ namespace LMarksBookmarksApi
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            });
             services.AddMvc();
 
             services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
@@ -52,6 +55,13 @@ namespace LMarksBookmarksApi
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
+
+            app.UseCors("AllowAll");
+             //builder.WithOrigins("http://localhost:3000").AllowAnyHeader()
+             // builder.AllowAnyOrigin()
+
+            // );
+
 
             app.UseMvc();
         }

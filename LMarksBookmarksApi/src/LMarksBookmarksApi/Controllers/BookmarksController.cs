@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LMarksBookmarksApi.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMarksBookmarksApi.Controllers
 {
     [Route("m")] //was api/[controller]
+    [DisableCors]
     public class BookmarksController : Controller
     {
         public BookmarksController(IBookmarkRepository bookmarks)
