@@ -14,7 +14,7 @@ import 'rxjs/add/operator/switchMap';
         <img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="287" height="120" border="0">
     </a>
   
-    <h3>Search  <input [(ngModel)]="searchName" placeholder="User name" />  <button (click)="search()">+</button> </h3>
+    <h3><input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <button (click)="search()">Search</button> </h3>
     <h3><a href="http://localhost:3000/login">Login</a> </h3>
     <h3><a href="http://localhost:3000/register">Register</a> </h3>
     <h3><a href="http://localhost:3000/logout">Logout</a> </h3>
