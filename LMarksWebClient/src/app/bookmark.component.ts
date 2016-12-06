@@ -76,7 +76,7 @@ export class BookmarkComponent implements OnInit {
     }
 
     search() : void {
-      console.log("stuff");
+      console.log("redirect to do"+this.searchName);
       
     }
 }
