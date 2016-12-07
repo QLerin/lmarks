@@ -17,6 +17,10 @@
 --reference:C:\Users\Linas\.nuget\packages\Dapper\1.50.2\lib\net451\Dapper.dll
 --reference:C:\Users\Linas\.nuget\packages\IdentityModel\2.0.0-rc3\lib\net45\IdentityModel.dll
 --reference:C:\Users\Linas\.nuget\packages\IdentityServer4\1.0.0-rc1-update2\lib\net452\IdentityServer4.dll
+--reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNet.Cors\5.2.3\lib\net45\System.Web.Cors.dll
+--reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNet.WebApi.Client\5.2.3\lib\net45\System.Net.Http.Formatting.dll
+--reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNet.WebApi.Core\5.2.3\lib\net45\System.Web.Http.dll
+--reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNet.WebApi.Cors\5.2.3\lib\net45\System.Web.Http.Cors.dll
 --reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNetCore.Authentication\1.0.0\lib\net451\Microsoft.AspNetCore.Authentication.dll
 --reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNetCore.Authentication.Cookies\1.0.0\lib\net451\Microsoft.AspNetCore.Authentication.Cookies.dll
 --reference:C:\Users\Linas\.nuget\packages\Microsoft.AspNetCore.Cors\1.0.0\lib\net451\Microsoft.AspNetCore.Cors.dll

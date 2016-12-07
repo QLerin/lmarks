@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-
+import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fountain-app',
@@ -7,8 +8,14 @@ import {Component} from '@angular/core';
 })
 export class HelloComponent {
   public search: string;
+  cUser = JSON.parse(localStorage.getItem('currentUser')); 
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
     this.search = 'Search';
   }
+
+  logoff() : void{
+      this.authenticationService.logout();
+      location.reload();
+    }
 }

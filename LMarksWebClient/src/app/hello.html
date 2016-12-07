@@ -1,7 +1,27 @@
-<a href="http://localhost:3000/">
-    <img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="287" height="120" border="0">
-</a>
-<h3>{{ search }} <input type="text" name="fname"> </h3>
-<h3><a href="http://localhost:3000/login">Login</a> </h3>
-<h3><a href="http://localhost:3000/register">Register</a> </h3>
-<h3><a href="http://localhost:3000/logout">Logout</a> </h3>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
+</style>
+
+<a href="http://localhost:3000/"><img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="143" height="60" border="0"></a>
+
+
+<div *ngIf="cUser == null" class="toplinks">  
+<a href="http://localhost:3000/login" class="button button2">Login</a>
+<a href="http://localhost:3000/register" class="button button2">Register</a>
+</div>
+<div *ngIf="cUser != null" class="toplinks">
+<a href="http://localhost:3000/u/{{cUser.username}}" class="button button2">Your Bookmarks</a>
+<button class="button button2" (click)="logoff()">Logout</button>
+</div>
+
+<div class="toplinks">
+<input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>         
+</div>
+
+<h3> Website to store your links and to access them anywhere instantly. <br> Register to start now. </h3> <br> 
+
+<h3> Example is here in the picture below. </h3>
+
+<img src="http://i.imgur.com/dOh7Q0v.png"  width="828" height="331" border="1">
+

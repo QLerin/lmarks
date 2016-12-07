@@ -37,7 +37,10 @@ namespace LMarksUsersApi
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            });
             services.AddMvc();
 
             services.AddSingleton<IUsersRepository, UsersRepository>();
@@ -48,6 +51,8 @@ namespace LMarksUsersApi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors("AllowAll");
 
             app.UseApplicationInsightsRequestTelemetry();
 

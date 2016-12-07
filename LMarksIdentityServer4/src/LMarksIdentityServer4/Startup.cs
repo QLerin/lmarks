@@ -18,6 +18,10 @@ namespace LMarksIdentityServer4
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            });
             services.AddDeveloperIdentityServer().AddInMemoryScopes(Configurations.Scopes.GetScopes())
                 .AddInMemoryClients(Configurations.Clients.GetClients());
             services.AddTransient<IResourceOwnerPasswordValidator, Configurations.ResourceOwnerPasswordValidator>();
@@ -30,6 +34,7 @@ namespace LMarksIdentityServer4
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
+            app.UseCors("AllowAll");
 
             if (env.IsDevelopment())
             {

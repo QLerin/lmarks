@@ -3,7 +3,9 @@ import {Bookmark} from './bookmark';
 import {BookmarkService} from './bookmark.service';
 import { ActivatedRoute, Params }   from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-//import {Router} from 'angular2/router';
+
+import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,17 +14,20 @@ import 'rxjs/add/operator/switchMap';
     <style>
       @import url('https://fonts.googleapis.com/css?family=Droid+Serif');
     </style>
-    <a href="http://localhost:3000/">
-        <img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="143" height="60" border="0">
-    </a>
+    <a href="http://localhost:3000/"><img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="143" height="60" border="0"></a>
 
-    <div class="toplinks">
-    <h3>
-    <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>       
+
+    <div *ngIf="cUser == null" class="toplinks">  
     <a href="http://localhost:3000/login" class="button button2">Login</a>
     <a href="http://localhost:3000/register" class="button button2">Register</a>
-    <a href="http://localhost:3000/logout" class="button button2">Logout</a>   
-    </h3>
+    </div>
+    <div *ngIf="cUser != null" class="toplinks">
+    <a href="http://localhost:3000/u/{{cUser.username}}" class="button button2">Your Bookmarks</a>
+    <button class="button button2" (click)="logoff()">Logout</button>
+    </div>
+
+    <div class="toplinks">
+    <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>         
     </div>
 
 <br>
@@ -38,14 +43,14 @@ import 'rxjs/add/operator/switchMap';
         <th> {{bookmark.date | date: 'yyyy-MM-dd'}} </th>
         <th> <a href="{{bookmark.link}}">{{bookmark.description}}</a> </th>  
         <th> {{bookmark.link}} </th> 
-        <button class="button buttonx" (click)="delete(bookmark)">✘</button> 
+        <button *ngIf='cUser != null && cUser.username == page' class="button buttonx" (click)="delete(bookmark)">✘</button> 
       </tr>
       
       <tr> 
         <th> </th>
-        <th> <input [(ngModel)]="addDescription" placeholder="Bookmark description" /> </th> 
-        <th> <input [(ngModel)]="addLink" placeholder='Website address' /> 
-        </th> <button class="button buttonv" (click)="add()">✔</button> 
+        <th> <input *ngIf="cUser != null && cUser.username == page" [(ngModel)]="addDescription" placeholder="Bookmark description" /> </th> 
+        <th> <input *ngIf="cUser != null && cUser.username == page" [(ngModel)]="addLink" placeholder='Website address' /> 
+        </th> <button *ngIf="cUser != null && cUser.username == page" class="button buttonv" (click)="add()">✔</button> 
       </tr>
       </table>
     `,
@@ -55,33 +60,38 @@ export class BookmarkComponent implements OnInit {
     @Input() addLink: string;
     @Input() addDescription: string;
     @Input() searchName: string;
-    
+
+    cUser = JSON.parse(localStorage.getItem('currentUser')); //.username
+    page : string;
+
     bookmarks: Bookmark[];
     selectedBookmark : Bookmark;
     temporaryBookmark : Bookmark;
 
-    constructor(private bookmarkService: BookmarkService, private route: ActivatedRoute) { }
+    constructor(private bookmarkService: BookmarkService, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
-
+      this.page = location.pathname.toString().slice(3);
       this.route.params.switchMap((params: Params) => this.bookmarkService.getUsersBookmarks(params['name']))
       .subscribe(bookmarks => { 
           this.bookmarks = bookmarks;
           });
     }
-      onSelect(bookmark: Bookmark): void {
+    onSelect(bookmark: Bookmark): void {
       this.selectedBookmark = bookmark;
     }
 
     add() : void {
       if(this.addLink != null && this.addDescription != null && this.addLink != "" && this.addDescription != ""){
-        this.temporaryBookmark = new Bookmark("Admin", this.addLink, this.addDescription);
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.temporaryBookmark = new Bookmark(currentUser.username, this.addLink, this.addDescription);
         this.bookmarkService.addBookmark(this.temporaryBookmark);
 
         this.route.params.switchMap((params: Params) => this.bookmarkService.getUsersBookmarks(params['name'])).subscribe(bookmarks => { 
           this.bookmarks = bookmarks;
         });
       }
+      
     }
 
     delete(bookmark: Bookmark) : void {
@@ -94,8 +104,9 @@ export class BookmarkComponent implements OnInit {
       }
     }
 
-    search() : void {
-      console.log("redirect to do"+this.searchName);
-      
+
+    logoff() : void{
+      this.authenticationService.logout();
+      location.reload();
     }
 }

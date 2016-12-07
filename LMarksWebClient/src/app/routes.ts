@@ -5,6 +5,8 @@ import {RouterModule} from '@angular/router';
 import {Routes} from '@angular/router';
 import {HelloComponent} from './hello';
 import {BookmarkComponent} from './bookmark.component';
+import {LoginComponent} from './login.component';
+import {RegistrationComponent} from './registration.component';
 
 @Component({
   selector: 'fountain-root',
@@ -19,6 +21,12 @@ export const routes: Routes = [
   },
   { 
     path: 'u/:name', component: BookmarkComponent 
+  },
+  { 
+    path: 'login', component: LoginComponent 
+  },
+    { 
+    path: 'register', component: RegistrationComponent 
   },
 ];
 

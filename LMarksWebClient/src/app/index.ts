@@ -9,6 +9,12 @@ import {BookmarkService} from './bookmark.service'
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
+import {LoginComponent} from './login.component';
+import {AuthenticationService} from './authentication.service'
+
+import {RegistrationComponent} from './registration.component';
+import {RegistrationService} from './registration.service';
+
 
 @NgModule({
   imports: [
@@ -21,9 +27,11 @@ import { HttpModule, JsonpModule } from '@angular/http';
   declarations: [
     RootComponent,
     HelloComponent,
-    BookmarkComponent
+    BookmarkComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
-  providers: [ BookmarkService ],
+  providers: [ BookmarkService,  AuthenticationService, RegistrationService],
   bootstrap: [RootComponent]
 })
 export class AppModule {}

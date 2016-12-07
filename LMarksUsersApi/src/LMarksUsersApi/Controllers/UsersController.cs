@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LMarksUsersApi.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMarksUsersApi.Controllers
 {
-     [Route("u")] 
+     [Route("u")]
+    [DisableCors]
     public class UsersController : Controller
     {
         public UsersController(IUsersRepository userlist)
