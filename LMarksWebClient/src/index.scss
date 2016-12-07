@@ -1,3 +1,114 @@
 body {
   background-color: floralwhite;
 }
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: #4CAF50;
+    color: white; 
+    
+}
+
+.button1:hover {
+    background-color: green; 
+    color: white;
+}
+
+.button2 {
+    font-size: 15px;
+    padding: 10px 24px;
+    background-color: dodgerblue;
+    color: white; 
+}
+
+.button2:hover {
+    background-color: cornflowerblue; 
+    color: white;
+}
+
+.buttonx {
+    background-color: darkred;
+    color: white; 
+    padding: 4px 8px;
+    font-size: 14px;
+    
+}
+
+.buttonx:hover {
+    background-color: red; 
+    color: white;
+}
+
+.buttonv {
+    background-color: #4CAF50;
+    color: white; 
+    padding: 10px 8px;
+    font-size: 14px;
+    
+}
+
+.buttonv:hover {
+    background-color: green;
+    color: white;
+}
+
+.toplinks {
+
+    float: right;
+
+    /*-webkit-column-width: 
+    -moz-column-width: 100px; 
+    column-width: 100px;*/
+}
+
+.bookmarkstopic {
+
+    
+
+    /*-webkit-column-width: 
+    -moz-column-width: 100px; 
+    column-width: 100px;*/
+}
+
+#tBM {
+    font-family: 'Droid Serif', serif;
+    font-size: 90%;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tBM td, #tBM th {
+    border: 1px solid #ddd;
+    padding: 6px;
+}
+
+#tBM tr:nth-child(even){background-color: #f2f2f2;}
+
+#tBM tr:hover {background-color: #ddd;}
+
+#tBM th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: white;
+    color: black;
+}
+
+input {
+    width: 100%;
+    line-height: 24px;
+}

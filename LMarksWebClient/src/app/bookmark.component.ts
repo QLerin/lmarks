@@ -9,26 +9,45 @@ import 'rxjs/add/operator/switchMap';
 @Component({
     selector: 'bookmark-app',
     template:`
-    
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+    </style>
     <a href="http://localhost:3000/">
-        <img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="287" height="120" border="0">
+        <img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="143" height="60" border="0">
     </a>
-  
-    <h3><input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <button (click)="search()">Search</button> </h3>
-    <h3><a href="http://localhost:3000/login">Login</a> </h3>
-    <h3><a href="http://localhost:3000/register">Register</a> </h3>
-    <h3><a href="http://localhost:3000/logout">Logout</a> </h3>
 
+    <div class="toplinks">
+    <h3>
+    <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>       
+    <a href="http://localhost:3000/login" class="button button2">Login</a>
+    <a href="http://localhost:3000/register" class="button button2">Register</a>
+    <a href="http://localhost:3000/logout" class="button button2">Logout</a>   
+    </h3>
+    </div>
+
+<br>
+    <div class="bookmarkstopic">
     <h2> Bookmarks </h2>
-    <table style="width:100%">
+    </div>
+    
+    <table id="tBM" style="width:100%">
+    <tr> <th>Adding date </th> <th>Website address </th>  <th>Website description</th> <tr>
       <tr *ngFor="let bookmark of bookmarks"
         [class.selected]="bookmark === selectedBookmark"
         (click)="onSelect(bookmark)">
-        <span class="badge">  <th> <a href="{{bookmark.link}}">{{bookmark.description}}</a> </th>  <th> {{bookmark.link}} </th> <th> {{bookmark.date | date: 'yyyy/MM/dd'}} </th> <th> <button (click)="delete(bookmark)">X</button> </th> </span> 
+        <th> {{bookmark.date | date: 'yyyy-MM-dd'}} </th>
+        <th> <a href="{{bookmark.link}}">{{bookmark.description}}</a> </th>  
+        <th> {{bookmark.link}} </th> 
+        <button class="button buttonx" (click)="delete(bookmark)">✘</button> 
+      </tr>
+      
+      <tr> 
+        <th> </th>
+        <th> <input [(ngModel)]="addDescription" placeholder="Bookmark description" /> </th> 
+        <th> <input [(ngModel)]="addLink" placeholder='Website address' /> 
+        </th> <button class="button buttonv" (click)="add()">✔</button> 
       </tr>
       </table>
-      <input [(ngModel)]="addDescription" placeholder="Bookmark description" /> <input [(ngModel)]="addLink" placeholder='Website address' />  <button (click)="add()">+</button>
-
     `,
      providers: [BookmarkService]
 })

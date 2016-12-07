@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LMarksBookmarksApi.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace LMarksBookmarksApi.Controllers
 {
     [Route("b")]
+    [DisableCors]
     public class UsersBookmarks : Controller
     {
 
