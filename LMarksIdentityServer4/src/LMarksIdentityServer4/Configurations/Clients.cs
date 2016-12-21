@@ -22,7 +22,7 @@ namespace LMarksIdentityServer4.Configurations
                         new Secret("LMsecret".Sha256())
                     },
                     AllowedScopes = new List<string>()
-                        {"myApi"},
+                        {"myApi", "myApi2"},
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 }

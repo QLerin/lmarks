@@ -52,6 +52,17 @@ namespace LMarksBookmarksApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                //Authority = "http://localhost:2680",
+                //
+
+                //ApiName = "myApi2"
+                Authority = "http://localhost:2680",
+                RequireHttpsMetadata = false,
+                AllowedScopes = { "myApi2" },
+            });
+
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();

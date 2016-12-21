@@ -11,7 +11,7 @@ namespace LMarksUsersApi.Controllers
 {
      [Route("u")]
     [DisableCors]
-    //[Authorize]
+
 
     public class UsersController : Controller
     {
@@ -29,7 +29,7 @@ namespace LMarksUsersApi.Controllers
             return Userlist.GetAll();
         }
 
-        // GET u/name
+        [Authorize]
         [HttpGet("{id}", Name = "GetUser")]
         public IActionResult GetById(string id)
         {
@@ -42,7 +42,7 @@ namespace LMarksUsersApi.Controllers
         }
 
 
-        // POST u
+        //[Authorize]
         [HttpPost]
         public IActionResult Create([FromBody]User user)
         {
@@ -54,7 +54,7 @@ namespace LMarksUsersApi.Controllers
             return CreatedAtRoute("GetUser", new { id = user.Key }, user);
         }
 
-        // PUT u/name
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody]User user)
         {
@@ -71,7 +71,7 @@ namespace LMarksUsersApi.Controllers
             Userlist.Update(user);
             return new NoContentResult();
         }
-        
+        [Authorize]
         [HttpPatch("{id}")]
         public IActionResult Update([FromBody] User user, string id)
         {

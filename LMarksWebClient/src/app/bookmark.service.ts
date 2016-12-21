@@ -35,24 +35,33 @@ export class BookmarkService {
     }
 
     addBookmark(bm: Bookmark){
+        var headers2 = new Headers({'Content-Type': 'application/json'}, );
+        var cUser = JSON.parse(localStorage.getItem('currentUser')); 
+        headers2.append('Authorization', 'Bearer '+ cUser.token);
+        console.log(headers2);
         const url2 = `${this.bURL}m/`;
-        return this.http.post(url2, JSON.stringify(bm), {headers: this.headers}).toPromise()
+        return this.http.post(url2, JSON.stringify(bm), {headers: headers2}).toPromise()
             .then(res => res.json().data).catch(this.handleError);
     }
 
     deleteBookmark(bm: Bookmark){
+        var headers2 = new Headers({'Content-Type': 'application/json'}, );
+        var cUser = JSON.parse(localStorage.getItem('currentUser')); 
+        headers2.append('Authorization', 'Bearer '+ cUser.token);
         const temp = bm.key;
         const url3 = `${this.bURL}m/${temp}`;
-        return this.http.delete(url3, {headers: this.headers})
+        return this.http.delete(url3, {headers: headers2})
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
     }
 
     updateBookmark(bm: Bookmark){
-        
+        var headers2 = new Headers({'Content-Type': 'application/json'}, );
+        var cUser = JSON.parse(localStorage.getItem('currentUser')); 
+        headers2.append('Authorization', 'Bearer '+ cUser.token);
         const url2 = `${this.bURL}m/`+ bm.key;
-        return this.http.put(url2, JSON.stringify(bm), {headers: this.headers}).toPromise();            
+        return this.http.put(url2, JSON.stringify(bm), {headers: headers2}).toPromise();            
     }
 }
 

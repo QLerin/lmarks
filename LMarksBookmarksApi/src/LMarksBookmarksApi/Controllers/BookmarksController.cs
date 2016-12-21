@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LMarksBookmarksApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace LMarksBookmarksApi.Controllers
         //{
         //    return Bookmarks.GetAll();
         //}
-
+        //[Authorize]
         [HttpGet("{id}", Name = "GetMark")]
         public IActionResult GetById(string id)
         {
@@ -38,7 +39,7 @@ namespace LMarksBookmarksApi.Controllers
             return new ObjectResult(mark);
         }
 
-        // POST api/values
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody]Bookmark mark)
         {
@@ -50,7 +51,7 @@ namespace LMarksBookmarksApi.Controllers
             return CreatedAtRoute("GetMark", new { id = mark.Key}, mark);
         }
 
-        // PUT api/values/5
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody]Bookmark mark)
         {
@@ -68,6 +69,7 @@ namespace LMarksBookmarksApi.Controllers
             return new NoContentResult();
         }
 
+        [Authorize]
         [HttpPatch("{id}")]
         public IActionResult Update([FromBody] Bookmark mark, string id)
         {
@@ -88,7 +90,7 @@ namespace LMarksBookmarksApi.Controllers
             return new NoContentResult();
         }
 
-        // DELETE api/values/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {

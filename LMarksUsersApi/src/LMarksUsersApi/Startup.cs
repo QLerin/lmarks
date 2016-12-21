@@ -56,8 +56,7 @@ namespace LMarksUsersApi
             {
                 Authority = "http://localhost:2680",
                 RequireHttpsMetadata = false,
-
-                ApiName = "myApi"
+                AllowedScopes = { "myApi" },
             });
 
             app.UseCors("AllowAll");

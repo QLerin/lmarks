@@ -16,6 +16,12 @@ namespace LMarksIdentityServer4.Configurations
                 {
                     Name = "myApi",
                     Description = "Some description about myApi"
+                },
+
+                new Scope()
+                {
+                    Name = "myApi2",
+                    Description = "Some description about myApi"
                 }
             };
         }
