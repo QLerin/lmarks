@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
  
 import { AuthenticationService } from './authentication.service';
@@ -12,11 +12,16 @@ import { AuthenticationService } from './authentication.service';
     <a href="http://localhost:3000/"><img src="http://i.imgur.com/JUAPEnj.png" alt="Home page" width="143" height="60" border="0"></a>
 
     <div class="toplinks">
-    <h3>
-    <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>       
-    <a href="http://localhost:3000/register" class="button button2">Register</a>
-    </h3>
+        <a href="http://localhost:3000/register" class="button button2">Register</a>
     </div>
+
+    <div class="toplinks">
+        <form name="searchForm">
+            <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;" name="login"/>  
+            <a href="http://localhost:3000/u/{{searchName}}" class="around"><input type="submit" value="Search" (click)="searchU()" class="button button1"/></a>    
+        </form>              
+    </div>
+
     <div class="col-md-6 col-md-offset-3">
     <h2>Login</h2>
     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
@@ -31,19 +36,21 @@ import { AuthenticationService } from './authentication.service';
             <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         </div>
         <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Login</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <button class="button button1">Login</button>
+            <div *ngIf="loading"> Wrong password </div>
         </div>
-        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+        
     </form>
 </div>
 `
 })
  
 export class LoginComponent implements OnInit {
+    @Input() searchName: string;
     model: any = {};
     loading = false;
     error = '';
+    
  
     constructor(
         private router: Router,
@@ -67,5 +74,12 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+
+    searchU() : void{
+      if(this.searchName != null && this.searchName != ""){
+        console.log(this.searchName);
+        window.location.href='http://localhost:3000/u/'+this.searchName;
+      }
     }
 }

@@ -7,12 +7,14 @@ import '@angular/common';
 import 'rxjs';
 
 import './index.scss';
+import {enableProdMode} from '@angular/core';
 
 
 //import {enableProdMode} from '@angular/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app';
 
+enableProdMode();
 //declare var process: any;
 //if (process.env.NODE_ENV === 'production') {
 //  //enableProdMode();

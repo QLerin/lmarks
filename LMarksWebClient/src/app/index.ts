@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {routing, RootComponent} from './routes';
 
-import {HelloComponent} from './hello';
+import {MainComponent} from './main.component';
 import {BookmarkComponent} from './bookmark.component'
 import {BookmarkService} from './bookmark.service'
 
@@ -26,7 +26,7 @@ import {RegistrationService} from './registration.service';
   ],
   declarations: [
     RootComponent,
-    HelloComponent,
+    MainComponent,
     BookmarkComponent,
     LoginComponent,
     RegistrationComponent

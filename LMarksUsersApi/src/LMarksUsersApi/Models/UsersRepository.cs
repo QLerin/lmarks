@@ -35,7 +35,7 @@ namespace LMarksUsersApi.Models
 
         public IEnumerable<User> GetAll()
         {
-            var u = connection.Query<User>("SELECT * FROM t_users");
+            var u = connection.Query<User>("SELECT [login] FROM t_users");
             return u;
         }
 

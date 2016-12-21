@@ -4,6 +4,7 @@ export class Bookmark{
     link : string;
     description : string;
     date : Date;
+    visible : number;
 
     constructor(user:string, link:string, description:string){
         this.user = user;

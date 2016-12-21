@@ -3,7 +3,7 @@
 import {Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {Routes} from '@angular/router';
-import {HelloComponent} from './hello';
+import {MainComponent} from './main.component';
 import {BookmarkComponent} from './bookmark.component';
 import {LoginComponent} from './login.component';
 import {RegistrationComponent} from './registration.component';
@@ -17,7 +17,7 @@ export class RootComponent {}
 export const routes: Routes = [
   {
     path: '',
-    component: HelloComponent
+    component: MainComponent
   },
   { 
     path: 'u/:name', component: BookmarkComponent 

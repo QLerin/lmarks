@@ -21,14 +21,12 @@ namespace LMarksBookmarksApi.Controllers
 
         public IBookmarkRepository Bookmarks { get; set; }
 
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<Bookmark> GetAll()
-        {
-            return Bookmarks.GetAll();
-        }
+        //[HttpGet]
+        //public IEnumerable<Bookmark> GetAll()
+        //{
+        //    return Bookmarks.GetAll();
+        //}
 
-        // GET api/values/5
         [HttpGet("{id}", Name = "GetMark")]
         public IActionResult GetById(string id)
         {
@@ -56,7 +54,7 @@ namespace LMarksBookmarksApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody]Bookmark mark)
         {
-            if (mark == null || mark.Key != id)
+            if (mark == null)
             {
                 return BadRequest();
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LMarksUsersApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,8 @@ namespace LMarksUsersApi.Controllers
 {
      [Route("u")]
     [DisableCors]
+    //[Authorize]
+
     public class UsersController : Controller
     {
         public UsersController(IUsersRepository userlist)
@@ -19,8 +22,8 @@ namespace LMarksUsersApi.Controllers
 
         public IUsersRepository Userlist { get; set; }
 
-        // GET: u
-        [HttpGet]
+       // GET: u
+       [HttpGet]
         public IEnumerable<User> GetAll()
         {
             return Userlist.GetAll();
@@ -89,20 +92,20 @@ namespace LMarksUsersApi.Controllers
             return new NoContentResult();
         }
 
-        // DELETE u/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
-        {
+        //// DELETE u/5
+        //[HttpDelete("{id}")]
+        //public IActionResult Delete(string id)
+        //{
 
-            var bookmark = Userlist.Find(id);
-            if (bookmark == null)
-            {
-                return NotFound();
-            }
+        //    var bookmark = Userlist.Find(id);
+        //    if (bookmark == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Userlist.Remove(id);
-            return new NoContentResult();
-        }
+        //    Userlist.Remove(id);
+        //    return new NoContentResult();
+        //}
     }
     
 }

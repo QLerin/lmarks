@@ -2,6 +2,19 @@ body {
   background-color: #F5F5F5;
 }
 
+.around {
+    background-color: #F5F5F5; 
+    border: none;
+    color: white;
+    padding: 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0px 0px;
+}
+
+
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -54,15 +67,44 @@ body {
 }
 
 .buttonv {
-    background-color: #4CAF50;
+    background-color: dodgerblue;
     color: white; 
     padding: 10px 8px;
     font-size: 14px;
+    width: 151px;
     
 }
 
 .buttonv:hover {
-    background-color: green;
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.buttonvis {
+    background-color: #4CAF50;
+    color: white; 
+    padding: 4px 8px;
+    font-size: 14px;
+    width: 120px;
+    
+}
+
+.buttonvis:hover {
+    background-color: grey;
+    color: white;
+}
+
+.buttoninvis {
+    background-color: grey ;
+    color: white; 
+    padding: 4px 8px;
+    font-size: 14px;
+    width: 120px;
+    
+}
+
+.buttoninvis:hover {
+    background-color: #4CAF50;
     color: white;
 }
 

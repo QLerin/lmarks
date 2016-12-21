@@ -48,5 +48,11 @@ export class BookmarkService {
             .then(() => null)
             .catch(this.handleError);
     }
+
+    updateBookmark(bm: Bookmark){
+        
+        const url2 = `${this.bURL}m/`+ bm.key;
+        return this.http.put(url2, JSON.stringify(bm), {headers: this.headers}).toPromise();            
+    }
 }
 

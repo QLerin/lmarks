@@ -34,8 +34,8 @@ namespace LMarksBookmarksApi.Models
             mark.Key = Guid.NewGuid().ToString();
             mark.Date = DateTime.Now;
 
-            _connection.Execute(@"INSERT INTO t_bookmarks ([key], [user], [link], [description], [date]) VALUES (@a, @b, @c, @d, @e);",
-                new { a = mark.Key, b = mark.User, c = mark.Link, d = mark.Description, e = mark.Date});
+            _connection.Execute(@"INSERT INTO t_bookmarks ([key], [user], [link], [description], [date], [visible]) VALUES (@a, @b, @c, @d, @e, @f);",
+                new { a = mark.Key, b = mark.User, c = mark.Link, d = mark.Description, e = mark.Date, f = 1});
         }
 
         public IEnumerable<Bookmark> GetAll()
@@ -66,8 +66,8 @@ namespace LMarksBookmarksApi.Models
         public void Update(Bookmark m)
         {
             m.Date = DateTime.Now;
-            _connection.Execute(@"UPDATE t_bookmarks SET [user] = @a, [link] = @b, [description] = @c, [date] = @d WHERE [key] = @e;", 
-                new { a = m.User, b = m.Link, c = m.Description, d = m.Date, e = m.Key});
+            _connection.Execute(@"UPDATE t_bookmarks SET [user] = @a, [link] = @b, [description] = @c, [date] = @d, [visible] = @f WHERE [key] = @e;", 
+                new { a = m.User, b = m.Link, c = m.Description, d = m.Date, e = m.Key, f = m.Visible});
         }
     }
 }

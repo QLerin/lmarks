@@ -52,6 +52,14 @@ namespace LMarksUsersApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = "http://localhost:2680",
+                RequireHttpsMetadata = false,
+
+                ApiName = "myApi"
+            });
+
             app.UseCors("AllowAll");
 
             app.UseApplicationInsightsRequestTelemetry();

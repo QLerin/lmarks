@@ -25,7 +25,10 @@ import { User} from './user';
     </div>
 
     <div class="toplinks">
-    <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>         
+        <form name="searchForm">
+            <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;" name="login"/>  
+            <a href="http://localhost:3000/u/{{searchName}}" class="around"><input type="submit" value="Search" (click)="searchU()" class="button button1"/></a>  
+        </form>              
     </div>
 
     <div class="col-md-6 col-md-offset-3">
@@ -55,6 +58,7 @@ export class RegistrationComponent{
     @Input() login: string;
     @Input() email: string;
     @Input() pass: string;
+    @Input() searchName: string;
 
     cUser = JSON.parse(localStorage.getItem('currentUser')); 
     model: any = {};
@@ -70,6 +74,13 @@ export class RegistrationComponent{
             this.router.navigateByUrl('/login');
         }
 
+    }
+
+    searchU() : void{
+      if(this.searchName != null && this.searchName != ""){
+        console.log(this.searchName);
+        window.location.href='http://localhost:3000/u/'+this.searchName;
+      }
     }
  
 

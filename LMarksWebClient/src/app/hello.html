@@ -16,7 +16,10 @@
 </div>
 
 <div class="toplinks">
-<input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;"/>  <a href="http://localhost:3000/u/{{searchName}}" class="button button1">Search</a>         
+    <form name="searchForm">
+        <input [(ngModel)]="searchName" placeholder="User name" style="width: 80px;" name="login"/>  
+        <a href="http://localhost:3000/u/{{searchName}}" class="around"><input type="submit" value="Search" (click)="searchU()" class="button button1"/></a>  
+    </form>       
 </div>
 
 <h3> Website to store your links and to access them anywhere instantly. <br> Register to start now. </h3> <br> 
