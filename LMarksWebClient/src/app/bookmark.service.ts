@@ -38,7 +38,7 @@ export class BookmarkService {
         var headers2 = new Headers({'Content-Type': 'application/json'}, );
         var cUser = JSON.parse(localStorage.getItem('currentUser')); 
         headers2.append('Authorization', 'Bearer '+ cUser.token);
-        console.log(headers2);
+        //console.log(headers2);
         const url2 = `${this.bURL}m/`;
         return this.http.post(url2, JSON.stringify(bm), {headers: headers2}).toPromise()
             .then(res => res.json().data).catch(this.handleError);

@@ -134,7 +134,7 @@ export class BookmarkComponent implements OnInit {
 
     searchU() : void{
       if(this.searchName != null && this.searchName != ""){
-        console.log(this.searchName);
+        //console.log(this.searchName);
         window.location.href='http://localhost:3000/u/'+this.searchName;
       }
     }
