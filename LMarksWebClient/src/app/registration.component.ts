@@ -67,7 +67,7 @@ export class RegistrationComponent{
         private router: Router, private registrationService: RegistrationService) { }
  
     register() {
-        console.log(this.email + this.login + this.pass)
+        //console.log(this.email + this.login + this.pass)
         if(this.email != null && this.email != "" && this.login != null && this.login != "" && this.pass != null && this.pass != ""){
             var temp = new User(this.login, this.email, this.pass);
             this.registrationService.addUser(temp);
@@ -78,7 +78,7 @@ export class RegistrationComponent{
 
     searchU() : void{
       if(this.searchName != null && this.searchName != ""){
-        console.log(this.searchName);
+        //console.log(this.searchName);
         window.location.href='http://localhost:3000/u/'+this.searchName;
       }
     }
